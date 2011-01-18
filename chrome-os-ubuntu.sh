@@ -5,7 +5,9 @@
 
 # Display the purpose of this script
 echo -e "\n==============================================================="
-echo -e "This script helps you to install Ubuntu on CR-48 (or any other \nChrome OS devices) from USB drive a little easier."
+echo -e "This script helps you to install Ubuntu on CR-48 (or any other \nChrome OS devices) from USB drive a little easier.\n"
+echo -e "NOTE: You can pass the location of your USB drive as the only \nparameter of this script"
+echo -e "For example, bash chrome-os-ubuntu.sh /tmp/usb"
 echo -e "================================================================="
 
 # Disabled powerd service
@@ -51,9 +53,14 @@ echo -e "The partitions are resized."
 # USB drive verification
 usbV="`mount | grep sd | grep -v sda`"
 listing="`ls /media | tail -n 1`"
-usbDr="`ls /media/$listing`"
+if [ "$1" == "" ]; then
+	usbDr="`ls /media/$listing`"
+else
+	usbDr="$1"
+fi
 while [ "$usbV" = "" -o "$usbDr" = "" ]; do
-	echo -e "\nPlease insert the USB drive with rootfs.bin, make_dev_ssd.sh, and common.sh in it.\nPress ENTER when the drive is inserted.\nIf you are not signed on to Chrome OS. Please press CTRL (left) + ALT (left) + <= (left arrow) to return to the graphical interface and sign on in order to detect yout USB drive by Chrome OS. Press CTRL + ALT + => (right arrow) to return to this script and press ENTER to continue.";
+	echo -e "\nPlease insert the USB drive with rootfs.bin, make_dev_ssd.sh, and common.sh in it.\nPress ENTER when the drive is inserted.\nIf you are not signed on to Chrome OS. Please press CTRL (left) + ALT (left) + <= (left arrow) to return to the graphical interface and sign on in order to detect yout USB drive by Chrome OS. Press CTRL + ALT + => (right arrow) to return to this script and press ENTER to continue.\n";
+	echo -e "Note that if you already mounted your USB driver manually, you can kill this script by pressing CTRL + Z and rerun this script with a parameter that points to the path of your USB drive.\nFor example, bash chrome-os-ubuntu.sh /tmp/usb"
 	read ready
 	echo -e "Detecting USB device..."
 	sleep 10
@@ -64,7 +71,11 @@ done
 
 # Mount the USB drive
 echo -e "\nMounting USB drive..."
-usbDir="/media/$listing"
+if [ "$1" == "" ]; then
+	usbDir="/media/$listing"
+else
+	usbDir="$1"
+fi
 echo -e "USB drive is mounted."
 
 # Determine the existence of three required files
@@ -141,3 +152,4 @@ sudo cgpt add -i 2 -P 0 -S 0 /dev/sda
 echo -e "\nUbuntu installation is complete.\nPress ENTER or wait 30 seconds to enter the newly installed Ubuntu."
 read -t 30 ubuntu
 sudo reboot
+

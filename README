@@ -1,6 +1,18 @@
 This script is used to help those who want to install Ubuntu on their CR-48 (or other Chrome OS devices) using flash drive a little easier. It is inspired by Jay's script (http://chromeos-cr48.blogspot.com/2010/12/easy-way-to-install-ubuntu-on-your-cr.html). It's also based on the steps on the Chromium Projects website (https://sites.google.com/a/chromium.org/dev/chromium-os/developer-information-for-chrome-os-devices/cr-48-chrome-notebook-developer-information/how-to-boot-ubuntu-on-a-cr-48).
 
-The prerequisites of running this script are three files, rootfs.bin, make_dev_ssd.sh, and common.sh which need to be placed in the flash drive. Other requirements, including this one, will be provided while running this script.
+The prerequisites of running this script are three files: rootfs.bin, make_dev_ssd.sh, and common.sh, which need to be placed in the flash drive. Other requirements, including this one, will be provided while running this script.
 
 You might need another flash drive to store the recovery image in case this script failed.
 http://www.google.com/support/chromeos/bin/answer.py?answer=1046510
+
+
+
+
+Change log:
+
+	12/31/2010
+		Initial release
+
+	01/18/2011
+		Added the option to add a parameter to customize the path of the USB drive
+
